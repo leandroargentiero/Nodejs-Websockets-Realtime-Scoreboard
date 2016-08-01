@@ -1,0 +1,6 @@
+{
+  "name": "Real-time scoreboard",
+  "version": "0.0.1",
+  "description": "A real-time scoreboard with node.js and web sockets",
+  "dependencies": {}
+}
