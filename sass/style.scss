@@ -1,12 +1,95 @@
-body{
-	background-color: #666;
-	p {
-		background-color: black;
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic);
+ $font-stack:'Source Sans Pro',
+sans-serif;
+ $font-color-scoreboard:#FFF;
+ $font-color-dashboard:#333;
+ body {
+    font-family: $font-stack;
+    color: $font-color-scoreboard;
+}
+#container {
+    width: 60%;
+    margin: 130px auto 0 auto;
+    #bg {
+        position: fixed;
+        top: -25px;
+        left: -150px;
+        min-width: 100%;
+        min-height: 100%;
+		z-index: -1;
+    }
+}
+.board-upper {
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .teams {
+        text-transform: uppercase;
+        font-size: 2em;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+	.scores{
+		font-size: 4em;
+		font-weight: 700;
 	}
-	h1{
-		color: red;
+}
+
+.board-middle{
+	width: 50%;
+	margin: 30px auto 0 auto;
+	font-size: 2em;
+	.shots{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-bottom: 20px;
 	}
-	h4{
-		color: blue;
+	.fouls{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
 	}
+}
+
+.board-bottom{
+	width: 50%;
+	margin: 50px auto 0 auto;
+	h2{
+		padding: 10px;
+		text-align: center;
+		background-color: rgba(255, 255, 255,0.5)
+	}
+	.updates{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		border: 1px solid rgba(255, 255, 255,0.5);
+		height: 100px;
+		padding: 1em;
+		.minute{
+			margin: 0 10px 0 0;
+		}
+	}
+}
+
+.dashboard{
+	color: $font-color-dashboard;
+	width: 80%;
+	margin: 0 auto 0 auto;
+	.team-selection{
+		display: flex;
+		flex-direction: row;
+	}	
+	.shots{
+		display: flex;
+		flex-direction: row;
+	}
+	.fouls{
+		display: flex;
+		flex-direction: row;
+	}
+	
 }
