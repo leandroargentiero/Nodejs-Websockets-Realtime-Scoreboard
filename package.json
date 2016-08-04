@@ -1,6 +1,15 @@
 {
-  "name": "Real-time scoreboard",
+  "name": "herexamenwebtech2-real-time-scoreboard",
   "version": "0.0.1",
   "description": "A real-time scoreboard with node.js and web sockets",
-  "dependencies": {}
+  "author": "Leandro Argentiero",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-sass": "^2.3.2",
+    "socket.io": "^1.4.8"
+  }
 }
