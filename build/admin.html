@@ -57,35 +57,64 @@
         </select>
        </div>
         <div class="shots">
-            <button class="shots-team1-up">+</button>
-            <button class="shots-team1-down">-</button>
+            <button class="btns" id="shots-team1-up">+</button>
+            <button class="btns" id="shots-team1-down">-</button>
             <p>Total shots</p>
-            <button class="shots-team2-up">+</button>
-            <button class="shots-team2-down">-</button>
+            <button class="btns" id="shots-team2-up">+</button>
+            <button class="btns" id="shots-team2-down">-</button>
         </div>
         <div class="fouls">
-            <button class="foul-team1-up">+</button>
-            <button class="foul-team1-down">-</button>
+            <button class="btns" id="foul-team1-up">+</button>
+            <button class="btns" id="foul-team1-down">-</button>
             <p>Fouls</p>
-            <button class="foul-team2-up">+</button>
-            <button class="foul-team2-down">-</button>
+            <button class="btns" id="foul-team2-up">+</button>
+            <button class="btns" id="foul-team2-down">-</button>
         </div>
     </div>
         <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
 		var socket = io();
+		var shotsTeam1 = 0;
+		var shotsTeam2 = 0;
+		
 		$('#selector-team1').on('change', function(){
-			console.log("changed...");
 			socket.emit('selector-team1', {
 				"country": $('#selector-team1').val()
 			});
 		});
 		
 		$('#selector-team2').on('change', function(){
-			console.log("changed...");
 			socket.emit('selector-team2', {
 				"country": $('#selector-team2').val()
+			});
+		});
+		
+		$('#shots-team1-up').on('click', function(){
+			shotsTeam1 += 1;
+			socket.emit('shots-team1-up', {
+				"shotsTeam1": shotsTeam1
+			});
+		});
+		
+		$('#shots-team1-down').on('click', function(){
+			shotsTeam1 -= 1;
+			socket.emit('shots-team1-down', {
+				"shotsTeam1": shotsTeam1
+			});
+		});
+		
+		$('#shots-team2-up').on('click', function(){
+			shotsTeam2 += 1;
+			socket.emit('shots-team2-up', {
+				"shotsTeam2": shotsTeam2
+			});
+		});
+		
+		$('#shots-team2-down').on('click', function(){
+			shotsTeam2 -= 1;
+			socket.emit('shots-team2-down', {
+				"shotsTeam2": shotsTeam2
 			});
 		});
 	</script>

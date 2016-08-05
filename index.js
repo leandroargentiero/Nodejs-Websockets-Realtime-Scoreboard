@@ -28,6 +28,25 @@ io.on('connection', function(socket){
 		io.emit('selector-team2', msg);
 		console.log(msg);
 	});
+	
+	socket.on('shots-team1-up', function(msg){
+		io.emit('shots-team1-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('shots-team1-down', function(msg){
+		io.emit('shots-team1-down', msg);
+		console.log(msg);	  
+	});
+	
+	socket.on('shots-team2-up', function(msg){
+		io.emit('shots-team2-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('shots-team2-down', function(msg){
+		io.emit('shots-team2-down', msg);
+		console.log(msg);	  
+	});
+			  
 });
 
 

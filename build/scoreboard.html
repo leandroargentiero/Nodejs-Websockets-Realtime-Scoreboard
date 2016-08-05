@@ -13,28 +13,28 @@
        <img src="/build/img/background.jpg" id="bg" alt="">
         <ul class="board-upper">
             <li>
-                <img id="flag-team1" class="flags" src="/build/img/belgium.png" alt="">
+                <img id="flag-team1" class="flags" src="" alt="">
             </li>
-            <li id="team1" class="teams">Belgium</li>
-            <li id="score1" class="scores">2</li>
+            <li id="team1" class="teams">Team 1</li>
+            <li id="score1" class="scores">0</li>
             <li>-</li>
             <li id="score2" class="scores">0</li>
-            <li id="team2" class="teams">France</li>
+            <li id="team2" class="teams">Team 2</li>
             <li>
-                <img id= "flag-team2" class="flags" src="/build/img/france.png" alt="">
+                <img id= "flag-team2" class="flags" src="" alt="">
             </li>
         </ul>
 
         <div class="board-middle">
             <ul class="shots">
-                <li>10</li>
+                <li id="shots-team1">0</li>
                 <li>Total Shots</li>
-                <li>4</li>
+                <li id="shots-team2">0</li>
             </ul>
             <ul class="fouls">
-                <li>2</li>
+                <li>0</li>
                 <li>Fouls</li>
-                <li>3</li>
+                <li>0</li>
             </ul>
         </div>
         <div class="board-bottom">
@@ -49,7 +49,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
 		var socket = io();
-		
+
 		socket.on('selector-team1', function(msg){
 			$('#team1').text(msg.country);
 			$('#flag-team1').attr('src', '/build/img/'+ msg.country + '.png'); 
@@ -58,6 +58,22 @@
 		socket.on('selector-team2', function(msg){
 			$('#team2').text(msg.country);
 			$('#flag-team2').attr('src', '/build/img/'+ msg.country + '.png'); 
+		});
+		
+		socket.on('shots-team1-up', function(msg) {
+			$('#shots-team1').text(msg.shotsTeam1);
+		});
+		
+		socket.on('shots-team1-down', function(msg) {
+			$('#shots-team1').text(msg.shotsTeam1);
+		});
+		
+		socket.on('shots-team2-up', function(msg) {
+			$('#shots-team2').text(msg.shotsTeam2);
+		});
+		
+		socket.on('shots-team2-down', function(msg) {
+			$('#shots-team2').text(msg.shotsTeam2);
 		});
 		
 	</script>
