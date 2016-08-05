@@ -37,7 +37,6 @@ io.on('connection', function(socket){
 		io.emit('shots-team1-down', msg);
 		console.log(msg);	  
 	});
-	
 	socket.on('shots-team2-up', function(msg){
 		io.emit('shots-team2-up', msg);
 		console.log(msg);	  
@@ -46,6 +45,25 @@ io.on('connection', function(socket){
 		io.emit('shots-team2-down', msg);
 		console.log(msg);	  
 	});
+	
+	socket.on('fouls-team1-up', function(msg){
+		io.emit('fouls-team1-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('fouls-team1-down', function(msg){
+		io.emit('fouls-team1-down', msg);
+		console.log(msg);	  
+	});
+	socket.on('fouls-team2-up', function(msg){
+		io.emit('fouls-team2-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('fouls-team2-down', function(msg){
+		io.emit('fouls-team2-down', msg);
+		console.log(msg);	  
+	});
+	
+	
 			  
 });
 

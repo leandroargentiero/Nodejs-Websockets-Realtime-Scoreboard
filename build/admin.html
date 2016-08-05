@@ -10,114 +10,138 @@
 
 <body>
     <div class="dashboard">
-       <h2>Select your teams</h2>
-       <div class="team-selection">
-        <select name="team1" id="selector-team1">
-            <option value="team1">Choose team 1</option>
-            <option value="albania">albania</option>
-            <option value="belgium">belgium</option>
-            <option value="croatia">croatia</option>
-            <option value="czech">czech</option>
-            <option value="england">england</option>
-            <option value="france">france</option>
-            <option value="germany">germany</option>
-            <option value="iceland">iceland</option>
-            <option value="italia">italia</option>
-            <option value="poland">poland</option>
-            <option value="portugal">portugal</option>
-            <option value="romania">romania</option>
-            <option value="slovenia">slovenia</option>
-            <option value="spain">spain</option>
-            <option value="sweden">sweden</option>
-            <option value="switzerland">switzerland</option>
-            <option value="ukraine">ukraine</option>
-            <option value="wales">wales</option>
-        </select>
-        <h3>VS</h3>
-        <select name="team2" id="selector-team2">
-            <option value="team2">Choose team 2</option>
-            <option value="albania">albania</option>
-            <option value="belgium">belgium</option>
-            <option value="croatia">croatia</option>
-            <option value="czech">czech</option>
-            <option value="england">england</option>
-            <option value="france">france</option>
-            <option value="germany">germany</option>
-            <option value="iceland">iceland</option>
-            <option value="italia">italia</option>
-            <option value="poland">poland</option>
-            <option value="portugal">portugal</option>
-            <option value="romania">romania</option>
-            <option value="slovenia">slovenia</option>
-            <option value="spain">spain</option>
-            <option value="sweden">sweden</option>
-            <option value="switzerland">switzerland</option>
-            <option value="ukraine">ukraine</option>
-            <option value="wales">wales</option>
-        </select>
-       </div>
+        <h2>Select your teams</h2>
+        <div class="team-selection">
+            <select name="team1" id="selector-team1">
+                <option value="team1">Choose team 1</option>
+                <option value="albania">albania</option>
+                <option value="belgium">belgium</option>
+                <option value="croatia">croatia</option>
+                <option value="czech">czech</option>
+                <option value="england">england</option>
+                <option value="france">france</option>
+                <option value="germany">germany</option>
+                <option value="iceland">iceland</option>
+                <option value="italia">italia</option>
+                <option value="poland">poland</option>
+                <option value="portugal">portugal</option>
+                <option value="romania">romania</option>
+                <option value="slovenia">slovenia</option>
+                <option value="spain">spain</option>
+                <option value="sweden">sweden</option>
+                <option value="switzerland">switzerland</option>
+                <option value="ukraine">ukraine</option>
+                <option value="wales">wales</option>
+            </select>
+            <h3>VS</h3>
+            <select name="team2" id="selector-team2">
+                <option value="team2">Choose team 2</option>
+                <option value="albania">albania</option>
+                <option value="belgium">belgium</option>
+                <option value="croatia">croatia</option>
+                <option value="czech">czech</option>
+                <option value="england">england</option>
+                <option value="france">france</option>
+                <option value="germany">germany</option>
+                <option value="iceland">iceland</option>
+                <option value="italia">italia</option>
+                <option value="poland">poland</option>
+                <option value="portugal">portugal</option>
+                <option value="romania">romania</option>
+                <option value="slovenia">slovenia</option>
+                <option value="spain">spain</option>
+                <option value="sweden">sweden</option>
+                <option value="switzerland">switzerland</option>
+                <option value="ukraine">ukraine</option>
+                <option value="wales">wales</option>
+            </select>
+        </div>
         <div class="shots">
-            <button class="btns" id="shots-team1-up">+</button>
-            <button class="btns" id="shots-team1-down">-</button>
+            <button class="shots" id="shots-team1-up">+</button>
+            <button class="shots" id="shots-team1-down">-</button>
             <p>Total shots</p>
-            <button class="btns" id="shots-team2-up">+</button>
-            <button class="btns" id="shots-team2-down">-</button>
+            <button class="shots" id="shots-team2-up">+</button>
+            <button class="shots" id="shots-team2-down">-</button>
         </div>
         <div class="fouls">
-            <button class="btns" id="foul-team1-up">+</button>
-            <button class="btns" id="foul-team1-down">-</button>
+            <button class="fouls" id="fouls-team1-up">+</button>
+            <button class="fouls" id="fouls-team1-down">-</button>
             <p>Fouls</p>
-            <button class="btns" id="foul-team2-up">+</button>
-            <button class="btns" id="foul-team2-down">-</button>
+            <button class="fouls" id="fouls-team2-up">+</button>
+            <button class="fouls" id="fouls-team2-down">-</button>
         </div>
     </div>
-        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-		var socket = io();
-		var shotsTeam1 = 0;
-		var shotsTeam2 = 0;
-		
-		$('#selector-team1').on('change', function(){
-			socket.emit('selector-team1', {
-				"country": $('#selector-team1').val()
-			});
-		});
-		
-		$('#selector-team2').on('change', function(){
-			socket.emit('selector-team2', {
-				"country": $('#selector-team2').val()
-			});
-		});
-		
-		$('#shots-team1-up').on('click', function(){
-			shotsTeam1 += 1;
-			socket.emit('shots-team1-up', {
-				"shotsTeam1": shotsTeam1
-			});
-		});
-		
-		$('#shots-team1-down').on('click', function(){
-			shotsTeam1 -= 1;
-			socket.emit('shots-team1-down', {
-				"shotsTeam1": shotsTeam1
-			});
-		});
-		
-		$('#shots-team2-up').on('click', function(){
-			shotsTeam2 += 1;
-			socket.emit('shots-team2-up', {
-				"shotsTeam2": shotsTeam2
-			});
-		});
-		
-		$('#shots-team2-down').on('click', function(){
-			shotsTeam2 -= 1;
-			socket.emit('shots-team2-down', {
-				"shotsTeam2": shotsTeam2
-			});
-		});
-	</script>
+        var socket = io();
+        var shotsTeam1 = 0;
+        var shotsTeam2 = 0;
+        var foulsTeam1 = 0;
+        var foulsTeam2 = 0;
+
+        $('#selector-team1').on('change', function() {
+            socket.emit('selector-team1', {
+                "country": $('#selector-team1').val()
+            });
+        });
+        $('#selector-team2').on('change', function() {
+            socket.emit('selector-team2', {
+                "country": $('#selector-team2').val()
+            });
+        });
+
+        $('.shots').on('click', function() {
+            var button = $(this).attr('id');
+
+            if (button == 'shots-team1-up') {
+                shotsTeam1 += 1;
+                socket.emit('shots-team1-up', {
+                    "shotsTeam1": shotsTeam1
+                });
+            } else if (button == 'shots-team1-down') {
+                shotsTeam1 -= 1;
+                socket.emit('shots-team1-down', {
+                    "shotsTeam1": shotsTeam1
+                });
+            } else if (button == 'shots-team2-up') {
+                shotsTeam2 += 1;
+                socket.emit('shots-team2-up', {
+                    "shotsTeam2": shotsTeam2
+                });
+            } else if (button == 'shots-team2-down') {
+                shotsTeam2 -= 1;
+                socket.emit('shots-team2-down', {
+                    "shotsTeam2": shotsTeam2
+                });
+            }
+        });
+        $('.fouls').on('click', function() {
+            var button = $(this).attr('id');
+
+            if (button == 'fouls-team1-up') {
+                foulsTeam1 += 1;
+                socket.emit('fouls-team1-up', {
+                    "foulsTeam1": foulsTeam1
+                });
+            } else if (button == 'fouls-team1-down') {
+                foulsTeam1 -= 1;
+                socket.emit('fouls-team1-down', {
+                    "foulsTeam1": shotsTeam1
+                });
+            } else if (button == 'fouls-team2-up') {
+                foulsTeam2 += 1;
+                socket.emit('fouls-team2-up', {
+                    "foulsTeam2": foulsTeam2
+                });
+            } else if (button == 'fouls-team2-down') {
+                foulsTeam2 -= 1;
+                socket.emit('fouls-team2-down', {
+                    "fouls": foulsTeam2
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

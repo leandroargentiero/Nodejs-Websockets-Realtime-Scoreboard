@@ -32,9 +32,9 @@
                 <li id="shots-team2">0</li>
             </ul>
             <ul class="fouls">
-                <li>0</li>
+                <li id="fouls-team1">0</li>
                 <li>Fouls</li>
-                <li>0</li>
+                <li id="fouls-team2">0</li>
             </ul>
         </div>
         <div class="board-bottom">
@@ -59,21 +59,31 @@
 			$('#team2').text(msg.country);
 			$('#flag-team2').attr('src', '/build/img/'+ msg.country + '.png'); 
 		});
-		
+
 		socket.on('shots-team1-up', function(msg) {
 			$('#shots-team1').text(msg.shotsTeam1);
 		});
-		
 		socket.on('shots-team1-down', function(msg) {
 			$('#shots-team1').text(msg.shotsTeam1);
 		});
-		
 		socket.on('shots-team2-up', function(msg) {
 			$('#shots-team2').text(msg.shotsTeam2);
 		});
-		
 		socket.on('shots-team2-down', function(msg) {
 			$('#shots-team2').text(msg.shotsTeam2);
+		});
+		
+		socket.on('fouls-team1-up', function(msg) {
+			$('#fouls-team1').text(msg.foulsTeam1);
+		});
+		socket.on('shots-team1-down', function(msg) {
+			$('#fouls-team1').text(msg.foulsTeam1);
+		});
+		socket.on('fouls-team2-up', function(msg) {
+			$('#fouls-team2').text(msg.foulsTeam2);
+		});
+		socket.on('fouls-team2-down', function(msg) {
+			$('#fouls-team2').text(msg.foulsTeam2);
 		});
 		
 	</script>
