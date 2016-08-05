@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Online Scoreboard - Argentiero Leandro</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/build/css/reset.css">
+    <link rel="stylesheet" href="/build/css/style.css">
 </head>
 
 <body>
     <div id="container">
-       <img src="../build/img/background.jpg" id="bg" alt="">
+       <img src="/build/img/background.jpg" id="bg" alt="">
         <ul class="board-upper">
             <li>
-                <img id="flag-team1" class="flags" src="./img/belgium.png" alt="">
+                <img id="flag-team1" class="flags" src="/build/img/belgium.png" alt="">
             </li>
             <li id="team1" class="teams">Belgium</li>
             <li id="score1" class="scores">2</li>
@@ -21,7 +21,7 @@
             <li id="score2" class="scores">0</li>
             <li id="team2" class="teams">France</li>
             <li>
-                <img id= "flag-team2" class="flags" src="./img/france.png" alt="">
+                <img id= "flag-team2" class="flags" src="/build/img/france.png" alt="">
             </li>
         </ul>
 
@@ -45,6 +45,23 @@
             </ul>
         </div>
     </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+		var socket = io();
+		
+		socket.on('selector-team1', function(msg){
+			$('#team1').text(msg.country);
+			$('#flag-team1').attr('src', '/build/img/'+ msg.country + '.png'); 
+		});
+		
+		socket.on('selector-team2', function(msg){
+			$('#team2').text(msg.country);
+			$('#flag-team2').attr('src', '/build/img/'+ msg.country + '.png'); 
+		});
+		
+	</script>
+    
 </body>
 
 </html>

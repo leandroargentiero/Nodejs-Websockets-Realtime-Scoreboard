@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/build/css/reset.css">
+    <link rel="stylesheet" href="/build/css/style.css">
 </head>
 
 <body>
     <div class="dashboard">
        <h2>Select your teams</h2>
        <div class="team-selection">
-        <select name="team1" id="team1">
+        <select name="team1" id="selector-team1">
+            <option value="team1">Choose team 1</option>
             <option value="albania">albania</option>
             <option value="belgium">belgium</option>
             <option value="croatia">croatia</option>
@@ -33,7 +34,8 @@
             <option value="wales">wales</option>
         </select>
         <h3>VS</h3>
-        <select name="team2" id="team2">
+        <select name="team2" id="selector-team2">
+            <option value="team2">Choose team 2</option>
             <option value="albania">albania</option>
             <option value="belgium">belgium</option>
             <option value="croatia">croatia</option>
@@ -69,6 +71,24 @@
             <button class="foul-team2-down">-</button>
         </div>
     </div>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+		var socket = io();
+		$('#selector-team1').on('change', function(){
+			console.log("changed...");
+			socket.emit('selector-team1', {
+				"country": $('#selector-team1').val()
+			});
+		});
+		
+		$('#selector-team2').on('change', function(){
+			console.log("changed...");
+			socket.emit('selector-team2', {
+				"country": $('#selector-team2').val()
+			});
+		});
+	</script>
 </body>
 
 </html>
