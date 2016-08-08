@@ -39,9 +39,7 @@
         </div>
         <div class="board-bottom">
            <h2>Realtime updates</h2>
-            <ul class="updates">
-                <li class="minute">33'</li>
-                <li class="comment">Goal by Dries Mertens</li>
+            <ul class="updates">		
             </ul>
         </div>
     </div>
@@ -97,6 +95,13 @@
 		});
 		socket.on('fouls-team2-down', function(msg) {
 			$('#fouls-team2').text(msg.foulsTeam2);
+		});
+		
+		socket.on('updateTeam1', function(msg){
+			$('.updates').prepend('<li class="updateTeam1">' + msg.update + '</li>');
+		});
+		socket.on('updateTeam2', function(msg){
+			$('.updates').prepend('<li class="updateTeam2">' + msg.update + '</li>');
 		});
 		
 	</script>

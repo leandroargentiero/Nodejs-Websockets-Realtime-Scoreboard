@@ -80,7 +80,15 @@ io.on('connection', function(socket){
 		console.log(msg);	  
 	});
 	
+	socket.on('updateTeam1', function(msg){
+		io.emit('updateTeam1', msg);
+		console.log(msg);
+	});
 	
+	socket.on('updateTeam2', function(msg){
+		io.emit('updateTeam2', msg);
+		console.log(msg);
+	});
 			  
 });
 

@@ -10,7 +10,7 @@
 
 <body>
     <div class="dashboard">
-        <h2>Select your teams</h2>
+       <h2 class="title">Admin Dashboard</h2>
         <div class="team-selection">
             <select name="team1" id="selector-team1">
                 <option value="team1">Choose team 1</option>
@@ -56,26 +56,41 @@
                 <option value="wales">wales</option>
             </select>
         </div>
-        <div class="scores">
-        	<button class="goals" id="goals-team1-up">+</button>
-            <button class="goals" id="goals-team1-down">-</button>
-            <p>Score</p>
-            <button class="goals" id="goals-team2-up">+</button>
-            <button class="goals" id="goals-team2-down">-</button>
+        <div class="statistics">
+			<div class="scores">
+				<button class="goals" id="goals-team1-up">+</button>
+				<h3>0</h3>
+				<button class="goals" id="goals-team1-down">-</button>
+				<p>Score</p>
+				<button class="goals" id="goals-team2-up">+</button>
+				<h3>0</h3>
+				<button class="goals" id="goals-team2-down">-</button>
+			</div>
+			<div class="shots">
+				<button class="shots" id="shots-team1-up">+</button>
+				<h3>0</h3>
+				<button class="shots" id="shots-team1-down">-</button>
+				<p>Shots</p>
+				<button class="shots" id="shots-team2-up">+</button>
+				<h3>0</h3>
+				<button class="shots" id="shots-team2-down">-</button>
+			</div>
+			<div class="fouls">
+				<button class="fouls" id="fouls-team1-up">+</button>
+				<h3>0</h3>
+				<button class="fouls" id="fouls-team1-down">-</button>
+				<p>Fouls</p>
+				<button class="fouls" id="fouls-team2-up">+</button>
+				<h3>0</h3>
+				<button class="fouls" id="fouls-team2-down">-</button>
+			</div>
         </div>
-        <div class="shots">
-            <button class="shots" id="shots-team1-up">+</button>
-            <button class="shots" id="shots-team1-down">-</button>
-            <p>Total shots</p>
-            <button class="shots" id="shots-team2-up">+</button>
-            <button class="shots" id="shots-team2-down">-</button>
-        </div>
-        <div class="fouls">
-            <button class="fouls" id="fouls-team1-up">+</button>
-            <button class="fouls" id="fouls-team1-down">-</button>
-            <p>Fouls</p>
-            <button class="fouls" id="fouls-team2-up">+</button>
-            <button class="fouls" id="fouls-team2-down">-</button>
+        <div class="updates">
+        	<h3>Realtime Updates</h3>
+        	<form action="">
+				<input type="text" id="txtUpdateTeam1" placeholder="Type here your update for team 1">
+       			<input type="text" id="txtUpdateTeam2" placeholder="Type here your update for team 2">
+        	</form>
         </div>
     </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -175,6 +190,29 @@
                 });
             }
         });
+		$('#txtUpdateTeam1').keyup('click', function(e){
+			if(e.keyCode == 13){
+				socket.emit('updateTeam1', {
+					"update": $('#txtUpdateTeam1').val()
+				});
+				$('#txtUpdateTeam1').val('');
+			}
+		});
+		$('input').keyup('click', function(e){
+			var input = $(this).attr('id');
+			
+			if(input == 'txtUpdateTeam1' && e.keyCode == 13){
+				socket.emit('updateTeam1', {
+					"update": $('#txtUpdateTeam1').val()
+				});
+				$('#txtUpdateTeam1').val('');
+			}else if(input == 'txtUpdateTeam2' && e.keyCode ==13){
+				socket.emit('updateTeam2', {
+					"update": $('#txtUpdateTeam2').val()
+				});
+				$('#txtUpdateTeam2').val('');
+			}
+		});
 		
     </script>
 </body>
