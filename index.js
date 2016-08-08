@@ -29,6 +29,23 @@ io.on('connection', function(socket){
 		console.log(msg);
 	});
 	
+	socket.on('goals-team1-up', function(msg){
+		io.emit('goals-team1-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('goals-team1-down', function(msg){
+		io.emit('goals-team1-down', msg);
+		console.log(msg);	  
+	});
+	socket.on('goals-team2-up', function(msg){
+		io.emit('goals-team2-up', msg);
+		console.log(msg);	  
+	});
+	socket.on('goals-team2-down', function(msg){
+		io.emit('goals-team2-down', msg);
+		console.log(msg);	  
+	});
+	
 	socket.on('shots-team1-up', function(msg){
 		io.emit('shots-team1-up', msg);
 		console.log(msg);	  

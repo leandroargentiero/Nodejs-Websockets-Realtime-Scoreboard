@@ -56,6 +56,13 @@
                 <option value="wales">wales</option>
             </select>
         </div>
+        <div class="scores">
+        	<button class="goals" id="goals-team1-up">+</button>
+            <button class="goals" id="goals-team1-down">-</button>
+            <p>Score</p>
+            <button class="goals" id="goals-team2-up">+</button>
+            <button class="goals" id="goals-team2-down">-</button>
+        </div>
         <div class="shots">
             <button class="shots" id="shots-team1-up">+</button>
             <button class="shots" id="shots-team1-down">-</button>
@@ -79,6 +86,8 @@
         var shotsTeam2 = 0;
         var foulsTeam1 = 0;
         var foulsTeam2 = 0;
+		var goalsTeam1 = 0;
+		var goalsTeam2 = 0;
 
         $('#selector-team1').on('change', function() {
             socket.emit('selector-team1', {
@@ -91,6 +100,31 @@
             });
         });
 
+		$('.goals').on('click', function() {
+            var button = $(this).attr('id');
+
+            if (button == 'goals-team1-up') {
+                goalsTeam1 += 1;
+                socket.emit('goals-team1-up', {
+                    "goalsTeam1": goalsTeam1
+                });
+            } else if (button == 'goals-team1-down') {
+                goalsTeam1 -= 1;
+                socket.emit('goals-team1-down', {
+                    "goalsTeam1": goalsTeam1
+                });
+            } else if (button == 'goals-team2-up') {
+                goalsTeam2 += 1;
+                socket.emit('goals-team2-up', {
+                    "goalsTeam2": goalsTeam2
+                });
+            } else if (button == 'goals-team2-down') {
+                goalsTeam2 -= 1;
+                socket.emit('goals-team2-down', {
+                    "goalsTeam2": goalsTeam2
+                });
+            }
+        });
         $('.shots').on('click', function() {
             var button = $(this).attr('id');
 
@@ -141,6 +175,7 @@
                 });
             }
         });
+		
     </script>
 </body>
 

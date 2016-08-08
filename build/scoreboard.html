@@ -59,6 +59,19 @@
 			$('#team2').text(msg.country);
 			$('#flag-team2').attr('src', '/build/img/'+ msg.country + '.png'); 
 		});
+		
+		socket.on('goals-team1-up', function(msg) {
+			$('#score1').text(msg.goalsTeam1);
+		});
+		socket.on('goals-team1-down', function(msg) {
+			$('#score1').text(msg.goalsTeam1);
+		});
+		socket.on('goals-team2-up', function(msg) {
+			$('#score2').text(msg.goalsTeam2);
+		});
+		socket.on('goals-team2-down', function(msg) {
+			$('#score2').text(msg.goalsTeam2);
+		});
 
 		socket.on('shots-team1-up', function(msg) {
 			$('#shots-team1').text(msg.shotsTeam1);
