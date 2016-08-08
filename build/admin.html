@@ -59,29 +59,29 @@
         <div class="statistics">
 			<div class="scores">
 				<button class="goals" id="goals-team1-up">+</button>
-				<h3>0</h3>
+				<h3 class="goalsTeam1">0</h3>
 				<button class="goals" id="goals-team1-down">-</button>
 				<p>Score</p>
 				<button class="goals" id="goals-team2-up">+</button>
-				<h3>0</h3>
+				<h3 class="goalsTeam2">0</h3>
 				<button class="goals" id="goals-team2-down">-</button>
 			</div>
 			<div class="shots">
 				<button class="shots" id="shots-team1-up">+</button>
-				<h3>0</h3>
+				<h3 class="shotsTeam1">0</h3>
 				<button class="shots" id="shots-team1-down">-</button>
 				<p>Shots</p>
 				<button class="shots" id="shots-team2-up">+</button>
-				<h3>0</h3>
+				<h3 class="shotsTeam2">0</h3>
 				<button class="shots" id="shots-team2-down">-</button>
 			</div>
 			<div class="fouls">
 				<button class="fouls" id="fouls-team1-up">+</button>
-				<h3>0</h3>
+				<h3 class="foulsTeam1">0</h3>
 				<button class="fouls" id="fouls-team1-down">-</button>
 				<p>Fouls</p>
 				<button class="fouls" id="fouls-team2-up">+</button>
-				<h3>0</h3>
+				<h3 class="foulsTeam2">0</h3>
 				<button class="fouls" id="fouls-team2-down">-</button>
 			</div>
         </div>
@@ -120,21 +120,25 @@
 
             if (button == 'goals-team1-up') {
                 goalsTeam1 += 1;
+				$('.goalsTeam1').text(goalsTeam1);
                 socket.emit('goals-team1-up', {
                     "goalsTeam1": goalsTeam1
                 });
             } else if (button == 'goals-team1-down') {
                 goalsTeam1 -= 1;
+				$('.goalsTeam1').text(goalsTeam1);
                 socket.emit('goals-team1-down', {
                     "goalsTeam1": goalsTeam1
                 });
             } else if (button == 'goals-team2-up') {
                 goalsTeam2 += 1;
+				$('.goalsTeam2').text(goalsTeam2);
                 socket.emit('goals-team2-up', {
                     "goalsTeam2": goalsTeam2
                 });
             } else if (button == 'goals-team2-down') {
                 goalsTeam2 -= 1;
+				$('.goalsTeam2').text(goalsTeam2);
                 socket.emit('goals-team2-down', {
                     "goalsTeam2": goalsTeam2
                 });
@@ -145,21 +149,25 @@
 
             if (button == 'shots-team1-up') {
                 shotsTeam1 += 1;
+				$('.shotsTeam1').text(shotsTeam1);
                 socket.emit('shots-team1-up', {
                     "shotsTeam1": shotsTeam1
                 });
             } else if (button == 'shots-team1-down') {
                 shotsTeam1 -= 1;
+				$('.shotsTeam1').text(shotsTeam1);
                 socket.emit('shots-team1-down', {
                     "shotsTeam1": shotsTeam1
                 });
             } else if (button == 'shots-team2-up') {
                 shotsTeam2 += 1;
+				$('.shotsTeam2').text(shotsTeam2);
                 socket.emit('shots-team2-up', {
                     "shotsTeam2": shotsTeam2
                 });
             } else if (button == 'shots-team2-down') {
                 shotsTeam2 -= 1;
+				$('.shotsTeam2').text(shotsTeam2);
                 socket.emit('shots-team2-down', {
                     "shotsTeam2": shotsTeam2
                 });
@@ -170,34 +178,31 @@
 
             if (button == 'fouls-team1-up') {
                 foulsTeam1 += 1;
+				$('.foulsTeam1').text(foulsTeam1);
                 socket.emit('fouls-team1-up', {
                     "foulsTeam1": foulsTeam1
                 });
             } else if (button == 'fouls-team1-down') {
                 foulsTeam1 -= 1;
+				$('.foulsTeam1').text(foulsTeam1);
                 socket.emit('fouls-team1-down', {
                     "foulsTeam1": shotsTeam1
                 });
             } else if (button == 'fouls-team2-up') {
                 foulsTeam2 += 1;
+				$('.foulsTeam2').text(foulsTeam2);
                 socket.emit('fouls-team2-up', {
                     "foulsTeam2": foulsTeam2
                 });
             } else if (button == 'fouls-team2-down') {
                 foulsTeam2 -= 1;
+				$('.foulsTeam2').text(foulsTeam2);
                 socket.emit('fouls-team2-down', {
                     "fouls": foulsTeam2
                 });
             }
         });
-		$('#txtUpdateTeam1').keyup('click', function(e){
-			if(e.keyCode == 13){
-				socket.emit('updateTeam1', {
-					"update": $('#txtUpdateTeam1').val()
-				});
-				$('#txtUpdateTeam1').val('');
-			}
-		});
+		
 		$('input').keyup('click', function(e){
 			var input = $(this).attr('id');
 			
