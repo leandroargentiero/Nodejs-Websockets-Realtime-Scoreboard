@@ -10,7 +10,7 @@
 
 <body>
     <div id="container">
-       <img src="/build/img/background.jpg" id="bg" alt="">
+        <img src="/build/img/background.jpg" id="bg" alt="">
         <ul class="board-upper">
             <li>
                 <img id="flag-team1" class="flags" src="" alt="">
@@ -21,7 +21,7 @@
             <li id="score2" class="scores">0</li>
             <li id="team2" class="teams">Team 2</li>
             <li>
-                <img id= "flag-team2" class="flags" src="" alt="">
+                <img id="flag-team2" class="flags" src="" alt="">
             </li>
         </ul>
 
@@ -38,16 +38,23 @@
             </ul>
         </div>
         <div class="board-bottom">
-           <h2>Realtime updates</h2>
-            <ul class="updates">		
+            <h2>Realtime updates</h2>
+            <ul class="updates">
             </ul>
         </div>
     </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-		var socket = io();
+</body>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    var socket = io();
 
+    socket.on('updateGame', function(game) {
+        $('#team1').text(game.team1.country);
+        $('#flag-team1').attr('src', '/build/img/' + game.team1.country + '.png');
+    });
+
+    /*
 		socket.on('selector-team1', function(msg){
 			$('#team1').text(msg.country);
 			$('#flag-team1').attr('src', '/build/img/'+ msg.country + '.png'); 
@@ -103,9 +110,7 @@
 		socket.on('updateTeam2', function(msg){
 			$('.updates').prepend('<li class="updateTeam2">' + msg.update + '</li>');
 		});
-		
-	</script>
-    
-</body>
+		*/
+</script>
 
 </html>

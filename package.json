@@ -11,6 +11,7 @@
     "gulp-imagemin": "^3.0.2",
     "gulp-minify-css": "^1.2.4",
     "gulp-sass": "^2.3.2",
+    "mongoose": "^4.5.8",
     "socket.io": "^1.4.8"
   }
 }

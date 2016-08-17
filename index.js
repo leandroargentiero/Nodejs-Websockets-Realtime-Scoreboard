@@ -2,23 +2,84 @@ var express = require('express');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var mongoose = require('mongoose');
+var currentGame = [];
 
-
-app.use('/build', express.static(__dirname + '/build'));
-
-app.get('/', function(req, res){
-	res.sendFile(__dirname + '/build/scoreboard.html');
+// DATABASE CONNECTION - MONGODB
+mongoose.connect('mongodb://127.0.0.1/herexamenwebtech2');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    // we're connected!
+    console.log("You're connected to MongoDB!");
 });
 
-app.get('/scoreboard', function(req, res){
-	res.sendFile(__dirname + '/build/scoreboard.html');
+// SCHEMA FOR DATABASE
+var gameSchema = mongoose.Schema({
+    team1: {
+        country: String,
+        goals: Number,
+        shots: Number,
+        fouls: Number
+    },
+    team2: {
+        country: String,
+        goals: Number,
+        shots: Number,
+        fouls: Number
+    },
+    updates: Array
 });
 
-app.get('/admin', function(req, res){
-	res.sendFile(__dirname + '/build/admin.html');
+// MODEL FOR DATABASE
+var Game = mongoose.model('Game', gameSchema);
+
+// WEBSOCKETS
+io.on('connection', function(socket) {
+
+    io.emit('getCurrentGame', currentGame);
+	
+	socket.on('reset', function(msg){
+		var newGame = new Game({
+          team1: {
+              country: "team1",
+              goals: 0,
+              shots: 0,
+              fouls: 0
+          },
+          team2: {
+              country: "team2",
+              goals: 0,
+              shots: 0,
+              fouls: 0
+          },
+          updates: Array
+        });
+        // model opslaan
+        newGame.save(function(err, newGame){
+          if (err) return console.error(err);
+          io.emit('reset', newGame);
+              console.log("RESET MATCH");
+              currentGame = newGame._id;
+			console.log(currentGame);
+        });
+	});
+
+    // TEAM1 FLAG & TEAM SELECTION
+    socket.on('selector-team1', function(msg) {
+		console.log(msg);
+        Game.findByIdAndUpdate(msg.id, {
+                'team1.country': msg.country
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+
+    });
+
 });
 
-io.on('connection', function(socket){
+/*
 	socket.on('selector-team1', function(msg){
 		io.emit('selector-team1', msg);
 		console.log(msg);
@@ -89,10 +150,26 @@ io.on('connection', function(socket){
 		io.emit('updateTeam2', msg);
 		console.log(msg);
 	});
+
 			  
 });
+*/
 
+// ROUTING
+app.use('/build', express.static(__dirname + '/build'));
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/build/scoreboard.html');
+});
+
+app.get('/scoreboard', function(req, res) {
+    res.sendFile(__dirname + '/build/scoreboard.html');
+});
+
+app.get('/admin', function(req, res) {
+    res.sendFile(__dirname + '/build/admin.html');
+});
+
+http.listen(3000, function() {
+    console.log('App listening on *:3000');
 });

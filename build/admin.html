@@ -10,7 +10,9 @@
 
 <body>
     <div class="dashboard">
-       <h2 class="title">Admin Dashboard</h2>
+        <h2 class="title">Admin Dashboard</h2>
+
+        <button id="reset">Start new game</button>
         <div class="team-selection">
             <select name="team1" id="selector-team1">
                 <option value="team1">Choose team 1</option>
@@ -57,64 +59,90 @@
             </select>
         </div>
         <div class="statistics">
-			<div class="scores">
-				<button class="goals" id="goals-team1-up">+</button>
-				<h3 class="goalsTeam1">0</h3>
-				<button class="goals" id="goals-team1-down">-</button>
-				<p>Score</p>
-				<button class="goals" id="goals-team2-up">+</button>
-				<h3 class="goalsTeam2">0</h3>
-				<button class="goals" id="goals-team2-down">-</button>
-			</div>
-			<div class="shots">
-				<button class="shots" id="shots-team1-up">+</button>
-				<h3 class="shotsTeam1">0</h3>
-				<button class="shots" id="shots-team1-down">-</button>
-				<p>Shots</p>
-				<button class="shots" id="shots-team2-up">+</button>
-				<h3 class="shotsTeam2">0</h3>
-				<button class="shots" id="shots-team2-down">-</button>
-			</div>
-			<div class="fouls">
-				<button class="fouls" id="fouls-team1-up">+</button>
-				<h3 class="foulsTeam1">0</h3>
-				<button class="fouls" id="fouls-team1-down">-</button>
-				<p>Fouls</p>
-				<button class="fouls" id="fouls-team2-up">+</button>
-				<h3 class="foulsTeam2">0</h3>
-				<button class="fouls" id="fouls-team2-down">-</button>
-			</div>
+            <div class="scores">
+                <button class="goals" id="goals-team1-up">+</button>
+                <h3 class="goalsTeam1">0</h3>
+                <button class="goals" id="goals-team1-down">-</button>
+                <p>Score</p>
+                <button class="goals" id="goals-team2-up">+</button>
+                <h3 class="goalsTeam2">0</h3>
+                <button class="goals" id="goals-team2-down">-</button>
+            </div>
+            <div class="shots">
+                <button class="shots" id="shots-team1-up">+</button>
+                <h3 class="shotsTeam1">0</h3>
+                <button class="shots" id="shots-team1-down">-</button>
+                <p>Shots</p>
+                <button class="shots" id="shots-team2-up">+</button>
+                <h3 class="shotsTeam2">0</h3>
+                <button class="shots" id="shots-team2-down">-</button>
+            </div>
+            <div class="fouls">
+                <button class="fouls" id="fouls-team1-up">+</button>
+                <h3 class="foulsTeam1">0</h3>
+                <button class="fouls" id="fouls-team1-down">-</button>
+                <p>Fouls</p>
+                <button class="fouls" id="fouls-team2-up">+</button>
+                <h3 class="foulsTeam2">0</h3>
+                <button class="fouls" id="fouls-team2-down">-</button>
+            </div>
         </div>
         <div class="updates">
-        	<h3>Realtime Updates</h3>
-        	<form action="">
-				<input type="text" id="txtUpdateTeam1" placeholder="Type here your update for team 1">
-       			<input type="text" id="txtUpdateTeam2" placeholder="Type here your update for team 2">
-        	</form>
+            <h3>Realtime Updates</h3>
+            <form action="">
+                <input type="text" id="txtUpdateTeam1" placeholder="Type here your update for team 1">
+                <input type="text" id="txtUpdateTeam2" placeholder="Type here your update for team 2">
+            </form>
         </div>
     </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-        var socket = io();
-        var shotsTeam1 = 0;
-        var shotsTeam2 = 0;
-        var foulsTeam1 = 0;
-        var foulsTeam2 = 0;
-		var goalsTeam1 = 0;
-		var goalsTeam2 = 0;
-
+    <input type="hidden" id="objectID" value="">
+</body>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+    var socket = io();
+    var shotsTeam1 = 0;
+    var shotsTeam2 = 0;
+    var foulsTeam1 = 0;
+    var foulsTeam2 = 0;
+    var goalsTeam1 = 0;
+    var goalsTeam2 = 0;
+    /*
         $('#selector-team1').on('change', function() {
             socket.emit('selector-team1', {
                 "country": $('#selector-team1').val()
             });
         });
+		*/
+
+    $('button').on('click', function() {
+        var id = this.id;
+        var objectID = $("#objectID").val()
+        socket.emit(this.id, {
+            'id': objectID
+        });
+    });
+
+    $('select').on('change', function() {
+        var objectID = $("#objectID").val();
+        socket.emit(this.id, {
+            'id': objectID,
+            'country': $(this).find(":selected").text()
+        });
+    });
+	
+	socket.on('reset', function(game){
+  	$('#objectID').attr('value', game._id);
+});
+
+    /*
         $('#selector-team2').on('change', function() {
             socket.emit('selector-team2', {
                 "country": $('#selector-team2').val()
             });
         });
-
+		*/
+    /*
 		$('.goals').on('click', function() {
             var button = $(this).attr('id');
 
@@ -218,8 +246,7 @@
 				$('#txtUpdateTeam2').val('');
 			}
 		});
-		
-    </script>
-</body>
+		*/
+</script>
 
 </html>
