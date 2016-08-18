@@ -115,20 +115,27 @@
         });
 		*/
 
-    $('button').on('click', function() {
-        var id = this.id;
-        var objectID = $("#objectID").val()
-        socket.emit(this.id, {
-            'id': objectID
-        });
-    });
-
     $('select').on('change', function() {
         var objectID = $("#objectID").val();
         socket.emit(this.id, {
             'id': objectID,
             'country': $(this).find(":selected").text()
         });
+    });
+	
+	    $('button').on('click', function() {
+        var id = this.id;
+        var objectID = $("#objectID").val()
+        socket.emit(this.id, {
+            'id': objectID
+        });
+    });
+	
+	socket.on('updateGame', function(game) {
+		$('.goalsTeam1').text(game.team1.goals);
+		$('.goalsTeam2').text(game.team2.goals);
+		$('.shotsTeam1').text(game.team1.shots);
+		$('.shotsTeam2').text(game.team2.shots);
     });
 	
 	socket.on('reset', function(game){
