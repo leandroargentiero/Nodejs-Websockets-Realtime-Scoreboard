@@ -20,15 +20,16 @@ var gameSchema = mongoose.Schema({
         country: String,
         goals: Number,
         shots: Number,
-        fouls: Number
+        fouls: Number,
+        updates: Array
     },
     team2: {
         country: String,
         goals: Number,
         shots: Number,
-        fouls: Number
-    },
-    updates: Array
+        fouls: Number,
+        updates: Array
+    }
 });
 
 // MODEL FOR DATABASE
@@ -45,15 +46,16 @@ io.on('connection', function(socket) {
                 country: "team1",
                 goals: 0,
                 shots: 0,
-                fouls: 0
+                fouls: 0,
+				updates: Array
             },
             team2: {
                 country: "team2",
                 goals: 0,
                 shots: 0,
-                fouls: 0
-            },
-            updates: Array
+                fouls: 0,
+				updates: Array
+            }
         });
         // model save
         newGame.save(function(err, newGame) {
@@ -88,69 +90,149 @@ io.on('connection', function(socket) {
     // TEAM1 GOALS
     socket.on('goals-team1-up', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team1.goals': 1 }
+            $inc: {
+                'team1.goals': 1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	socket.on('goals-team1-down', function(msg) {
+    socket.on('goals-team1-down', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team1.goals': -1 }
+            $inc: {
+                'team1.goals': -1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	
-	// TEAM2 GOALS
+
+    // TEAM2 GOALS
     socket.on('goals-team2-up', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team2.goals': 1 }
+            $inc: {
+                'team2.goals': 1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	socket.on('goals-team1-down', function(msg) {
+    socket.on('goals-team1-down', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team2.goals': -1 }
+            $inc: {
+                'team2.goals': -1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	
-	// TEAM1 SHOTS
+
+    // TEAM1 SHOTS
     socket.on('shots-team1-up', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team1.shots': 1 }
+            $inc: {
+                'team1.shots': 1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	socket.on('shots-team1-down', function(msg) {
+    socket.on('shots-team1-down', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team1.shots': -1 }
+            $inc: {
+                'team1.shots': -1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	
-	// TEAM2 SHOTS
+
+    // TEAM2 SHOTS
     socket.on('shots-team2-up', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team2.shots': 1 }
+            $inc: {
+                'team2.shots': 1
+            }
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
         });
     });
-	socket.on('shots-team2-down', function(msg) {
+    socket.on('shots-team2-down', function(msg) {
         Game.findByIdAndUpdate(msg.id, {
-            $inc: {'team2.shots': -1 }
+            $inc: {
+                'team2.shots': -1
+            }
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+
+    // TEAM1 FOULS
+    socket.on('fouls-team1-up', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            $inc: {
+                'team1.fouls': 1
+            }
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+    socket.on('fouls-team1-down', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            $inc: {
+                'team1.fouls': -1
+            }
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+
+    // TEAM2 FOULS
+    socket.on('fouls-team2-up', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            $inc: {
+                'team2.fouls': 1
+            }
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+    socket.on('fouls-team1-down', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            $inc: {
+                'team2.fouls': -1
+            }
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+
+    // REALTIME UPDATE TEAM1
+    socket.on('updateTeam1', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            'team1.updates': msg.update
+        }, function(err, data) {});
+        Game.findById(msg.id, function(err, found) {
+            io.emit('updateGame', found);
+        });
+    });
+
+    // REALTIME UPDATE TEAM2
+    socket.on('updateTeam2', function(msg) {
+        Game.findByIdAndUpdate(msg.id, {
+            'team2.updates': msg.update
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
@@ -161,68 +243,7 @@ io.on('connection', function(socket) {
 
 });
 
-/*
-	socket.on('selector-team1', function(msg){
-		io.emit('selector-team1', msg);
-		console.log(msg);
-	});
-	
-	socket.on('selector-team2', function(msg){
-		io.emit('selector-team2', msg);
-		console.log(msg);
-	});
-	
-	socket.on('goals-team1-up', function(msg){
-		io.emit('goals-team1-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('goals-team1-down', function(msg){
-		io.emit('goals-team1-down', msg);
-		console.log(msg);	  
-	});
-	socket.on('goals-team2-up', function(msg){
-		io.emit('goals-team2-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('goals-team2-down', function(msg){
-		io.emit('goals-team2-down', msg);
-		console.log(msg);	  
-	});
-	
-	socket.on('shots-team1-up', function(msg){
-		io.emit('shots-team1-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('shots-team1-down', function(msg){
-		io.emit('shots-team1-down', msg);
-		console.log(msg);	  
-	});
-	socket.on('shots-team2-up', function(msg){
-		io.emit('shots-team2-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('shots-team2-down', function(msg){
-		io.emit('shots-team2-down', msg);
-		console.log(msg);	  
-	});
-	
-	socket.on('fouls-team1-up', function(msg){
-		io.emit('fouls-team1-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('fouls-team1-down', function(msg){
-		io.emit('fouls-team1-down', msg);
-		console.log(msg);	  
-	});
-	socket.on('fouls-team2-up', function(msg){
-		io.emit('fouls-team2-up', msg);
-		console.log(msg);	  
-	});
-	socket.on('fouls-team2-down', function(msg){
-		io.emit('fouls-team2-down', msg);
-		console.log(msg);	  
-	});
-	
+/*	
 	socket.on('updateTeam1', function(msg){
 		io.emit('updateTeam1', msg);
 		console.log(msg);

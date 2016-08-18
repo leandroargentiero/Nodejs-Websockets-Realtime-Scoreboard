@@ -60,58 +60,12 @@
 		$('#shots-team2').text(game.team2.shots);
 		$('#fouls-team1').text(game.team1.fouls);
 		$('#fouls-team2').text(game.team2.fouls);
+		$('.updates').prepend('<li class="updateTeam1">' + game.team1.updates + '</li>');
+		$('.updates').prepend('<li class="updateTeam2">' + game.team2.updates + '</li>');
+
     });
-
-    /*
-		socket.on('selector-team1', function(msg){
-			$('#team1').text(msg.country);
-			$('#flag-team1').attr('src', '/build/img/'+ msg.country + '.png'); 
-		});
-		
-		socket.on('selector-team2', function(msg){
-			$('#team2').text(msg.country);
-			$('#flag-team2').attr('src', '/build/img/'+ msg.country + '.png'); 
-		});
-		
-		socket.on('goals-team1-up', function(msg) {
-			$('#score1').text(msg.goalsTeam1);
-		});
-		socket.on('goals-team1-down', function(msg) {
-			$('#score1').text(msg.goalsTeam1);
-		});
-		socket.on('goals-team2-up', function(msg) {
-			$('#score2').text(msg.goalsTeam2);
-		});
-		socket.on('goals-team2-down', function(msg) {
-			$('#score2').text(msg.goalsTeam2);
-		});
-
-		socket.on('shots-team1-up', function(msg) {
-			$('#shots-team1').text(msg.shotsTeam1);
-		});
-		socket.on('shots-team1-down', function(msg) {
-			$('#shots-team1').text(msg.shotsTeam1);
-		});
-		socket.on('shots-team2-up', function(msg) {
-			$('#shots-team2').text(msg.shotsTeam2);
-		});
-		socket.on('shots-team2-down', function(msg) {
-			$('#shots-team2').text(msg.shotsTeam2);
-		});
-		
-		socket.on('fouls-team1-up', function(msg) {
-			$('#fouls-team1').text(msg.foulsTeam1);
-		});
-		socket.on('shots-team1-down', function(msg) {
-			$('#fouls-team1').text(msg.foulsTeam1);
-		});
-		socket.on('fouls-team2-up', function(msg) {
-			$('#fouls-team2').text(msg.foulsTeam2);
-		});
-		socket.on('fouls-team2-down', function(msg) {
-			$('#fouls-team2').text(msg.foulsTeam2);
-		});
-		
+	
+    /*	
 		socket.on('updateTeam1', function(msg){
 			$('.updates').prepend('<li class="updateTeam1">' + msg.update + '</li>');
 		});

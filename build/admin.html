@@ -101,19 +101,6 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
-    var shotsTeam1 = 0;
-    var shotsTeam2 = 0;
-    var foulsTeam1 = 0;
-    var foulsTeam2 = 0;
-    var goalsTeam1 = 0;
-    var goalsTeam2 = 0;
-    /*
-        $('#selector-team1').on('change', function() {
-            socket.emit('selector-team1', {
-                "country": $('#selector-team1').val()
-            });
-        });
-		*/
 
     $('select').on('change', function() {
         var objectID = $("#objectID").val();
@@ -122,122 +109,48 @@
             'country': $(this).find(":selected").text()
         });
     });
-	
-	    $('button').on('click', function() {
+
+    $('button').on('click', function() {
         var id = this.id;
         var objectID = $("#objectID").val()
         socket.emit(this.id, {
             'id': objectID
         });
     });
-	
-	socket.on('updateGame', function(game) {
-		$('.goalsTeam1').text(game.team1.goals);
-		$('.goalsTeam2').text(game.team2.goals);
-		$('.shotsTeam1').text(game.team1.shots);
-		$('.shotsTeam2').text(game.team2.shots);
-    });
-	
-	socket.on('reset', function(game){
-  	$('#objectID').attr('value', game._id);
-});
 
-    /*
-        $('#selector-team2').on('change', function() {
-            socket.emit('selector-team2', {
-                "country": $('#selector-team2').val()
+    $('input').keyup('click', function(e) {
+        var input = $(this).attr('id');
+        var objectID = $("#objectID").val()
+
+        if (input == 'txtUpdateTeam1' && e.keyCode == 13) {
+            socket.emit('updateTeam1', {
+                'id': objectID,
+                'update': $('#txtUpdateTeam1').val()
             });
-        });
-		*/
-    /*
-		$('.goals').on('click', function() {
-            var button = $(this).attr('id');
+            $('#txtUpdateTeam1').val('');
+        } else if (input == 'txtUpdateTeam2' && e.keyCode == 13) {
+            socket.emit('updateTeam2', {
+                'id': objectID,
+                'update': $('#txtUpdateTeam2').val()
+            });
+            $('#txtUpdateTeam2').val('');
+        }
+    });
 
-            if (button == 'goals-team1-up') {
-                goalsTeam1 += 1;
-				$('.goalsTeam1').text(goalsTeam1);
-                socket.emit('goals-team1-up', {
-                    "goalsTeam1": goalsTeam1
-                });
-            } else if (button == 'goals-team1-down') {
-                goalsTeam1 -= 1;
-				$('.goalsTeam1').text(goalsTeam1);
-                socket.emit('goals-team1-down', {
-                    "goalsTeam1": goalsTeam1
-                });
-            } else if (button == 'goals-team2-up') {
-                goalsTeam2 += 1;
-				$('.goalsTeam2').text(goalsTeam2);
-                socket.emit('goals-team2-up', {
-                    "goalsTeam2": goalsTeam2
-                });
-            } else if (button == 'goals-team2-down') {
-                goalsTeam2 -= 1;
-				$('.goalsTeam2').text(goalsTeam2);
-                socket.emit('goals-team2-down', {
-                    "goalsTeam2": goalsTeam2
-                });
-            }
-        });
-        $('.shots').on('click', function() {
-            var button = $(this).attr('id');
+    socket.on('updateGame', function(game) {
+        $('.goalsTeam1').text(game.team1.goals);
+        $('.goalsTeam2').text(game.team2.goals);
+        $('.shotsTeam1').text(game.team1.shots);
+        $('.shotsTeam2').text(game.team2.shots);
+        $('.foulsTeam1').text(game.team1.fouls);
+        $('.foulsTeam2').text(game.team2.fouls);
+    });
 
-            if (button == 'shots-team1-up') {
-                shotsTeam1 += 1;
-				$('.shotsTeam1').text(shotsTeam1);
-                socket.emit('shots-team1-up', {
-                    "shotsTeam1": shotsTeam1
-                });
-            } else if (button == 'shots-team1-down') {
-                shotsTeam1 -= 1;
-				$('.shotsTeam1').text(shotsTeam1);
-                socket.emit('shots-team1-down', {
-                    "shotsTeam1": shotsTeam1
-                });
-            } else if (button == 'shots-team2-up') {
-                shotsTeam2 += 1;
-				$('.shotsTeam2').text(shotsTeam2);
-                socket.emit('shots-team2-up', {
-                    "shotsTeam2": shotsTeam2
-                });
-            } else if (button == 'shots-team2-down') {
-                shotsTeam2 -= 1;
-				$('.shotsTeam2').text(shotsTeam2);
-                socket.emit('shots-team2-down', {
-                    "shotsTeam2": shotsTeam2
-                });
-            }
-        });
-        $('.fouls').on('click', function() {
-            var button = $(this).attr('id');
+    socket.on('reset', function(game) {
+        $('#objectID').attr('value', game._id);
+    });
 
-            if (button == 'fouls-team1-up') {
-                foulsTeam1 += 1;
-				$('.foulsTeam1').text(foulsTeam1);
-                socket.emit('fouls-team1-up', {
-                    "foulsTeam1": foulsTeam1
-                });
-            } else if (button == 'fouls-team1-down') {
-                foulsTeam1 -= 1;
-				$('.foulsTeam1').text(foulsTeam1);
-                socket.emit('fouls-team1-down', {
-                    "foulsTeam1": shotsTeam1
-                });
-            } else if (button == 'fouls-team2-up') {
-                foulsTeam2 += 1;
-				$('.foulsTeam2').text(foulsTeam2);
-                socket.emit('fouls-team2-up', {
-                    "foulsTeam2": foulsTeam2
-                });
-            } else if (button == 'fouls-team2-down') {
-                foulsTeam2 -= 1;
-				$('.foulsTeam2').text(foulsTeam2);
-                socket.emit('fouls-team2-down', {
-                    "fouls": foulsTeam2
-                });
-            }
-        });
-		
+    /*	
 		$('input').keyup('click', function(e){
 			var input = $(this).attr('id');
 			
