@@ -172,24 +172,6 @@
         $('.foulsTeam2').text(game.team2.fouls);
         $('#objectID').attr('value', game._id);
     });
-
-    /*	
-		$('input').keyup('click', function(e){
-			var input = $(this).attr('id');
-			
-			if(input == 'txtUpdateTeam1' && e.keyCode == 13){
-				socket.emit('updateTeam1', {
-					"update": $('#txtUpdateTeam1').val()
-				});
-				$('#txtUpdateTeam1').val('');
-			}else if(input == 'txtUpdateTeam2' && e.keyCode ==13){
-				socket.emit('updateTeam2', {
-					"update": $('#txtUpdateTeam2').val()
-				});
-				$('#txtUpdateTeam2').val('');
-			}
-		});
-		*/
 </script>
 
 </html>
