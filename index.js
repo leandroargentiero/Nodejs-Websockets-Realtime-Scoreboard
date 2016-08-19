@@ -42,7 +42,7 @@ io.on('connection', function(socket) {
 	// GET CURRENT ONGOING GAME
     io.emit('getCurrentGame', currentGame);
 
-    socket.on('reset', function(msg) {
+    socket.on('newGame', function(msg) {
         var newGame = new Game({
             team1: {
                 country: "team1",
@@ -62,7 +62,7 @@ io.on('connection', function(socket) {
         // model save
         newGame.save(function(err, newGame) {
             if (err) return console.error(err);
-            io.emit('reset', newGame);
+            io.emit('newGame', newGame);
             console.log("STARTED NEW GAME");
             currentGame = newGame._id;
             console.log(currentGame);
@@ -87,6 +87,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -99,6 +100,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('goals-team1-down', function(msg) {
@@ -109,6 +111,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -121,6 +124,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('goals-team1-down', function(msg) {
@@ -131,6 +135,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -143,6 +148,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('shots-team1-down', function(msg) {
@@ -153,6 +159,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -165,6 +172,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('shots-team2-down', function(msg) {
@@ -175,6 +183,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -187,6 +196,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('fouls-team1-down', function(msg) {
@@ -197,6 +207,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -209,6 +220,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
     socket.on('fouls-team1-down', function(msg) {
@@ -219,6 +231,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -229,6 +242,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateRealtimeTeam1', found);
+			currentGame = found;
         });
     });
 

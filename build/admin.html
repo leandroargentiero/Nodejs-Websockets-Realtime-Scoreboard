@@ -12,7 +12,7 @@
     <div class="dashboard">
         <h2 class="title">Admin Dashboard</h2>
 
-        <button id="reset">Start new game</button>
+        <button id="newGame">Start new game</button>
         <div class="team-selection">
             <select name="team1" id="selector-team1">
                 <option value="team1">Choose team 1</option>
@@ -101,6 +101,8 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
+	
+	$('')
 
     $('select').on('change', function() {
         var objectID = $("#objectID").val();
@@ -146,7 +148,7 @@
         $('.foulsTeam2').text(game.team2.fouls);
     });
 
-    socket.on('reset', function(game) {
+    socket.on('newGame', function(game) {
 		$('select').prop('selectedIndex', 0);
 		$('.goalsTeam1').text(game.team1.goals);
         $('.goalsTeam2').text(game.team2.goals);
