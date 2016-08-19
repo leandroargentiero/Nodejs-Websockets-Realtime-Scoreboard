@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var currentGame = [];
 
 // DATABASE CONNECTION - MONGODB
-mongoose.connect('mongodb://127.0.0.1/herexamenwebtech2');
+mongoose.connect('leandroargentiero:herexamen@ds039431.mlab.com:39431/herexamenwebtech2');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
