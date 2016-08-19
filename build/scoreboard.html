@@ -49,7 +49,7 @@
 <script>
     var socket = io();
 	
-	// LOAD CURRENT GAME
+	// LOAD CURRENT GAME FOR NEW CONNECTIONS
 	socket.on('getCurrentGame', function(game){
 		if (typeof game.team1 !== "undefined"){
 			$('#team1').text(game.team1.country);
@@ -73,7 +73,7 @@
 		}
 	});
 	
-	// UPDATE WHEN NEW GAME HAS STARTED
+	// RESET STATS WHEN NEW GAME HAS STARTED
 	socket.on('newGame', function(game) {
 		$('#team1').text(game.team1.country);
 		$('#team2').text(game.team2.country);

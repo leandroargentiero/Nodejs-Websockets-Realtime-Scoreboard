@@ -37,11 +37,12 @@ var Game = mongoose.model('Game', gameSchema);
 
 // WEBSOCKETS
 io.on('connection', function(socket) {
-	console.log('A new user connected');
 	
-	// GET CURRENT ONGOING GAME
+	// EMIT CURRENT GAME TO NEW CONNECTIONS
+	console.log('A new user connected');
     io.emit('getCurrentGame', currentGame);
-
+	
+	// NEW GAME TRIGGER WHEN ADMIN RESETS GAME
     socket.on('newGame', function(msg) {
         var newGame = new Game({
             team1: {
@@ -59,7 +60,7 @@ io.on('connection', function(socket) {
 				updates: Array
             }
         });
-        // model save
+        // SAVING MODEL
         newGame.save(function(err, newGame) {
             if (err) return console.error(err);
             io.emit('newGame', newGame);
@@ -256,9 +257,6 @@ io.on('connection', function(socket) {
             io.emit('updateRealtimeTeam2', found);
         });
     });
-
-
-
 });
 
 // ROUTING

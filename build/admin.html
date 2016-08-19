@@ -101,8 +101,6 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
-	
-	$('')
 
     $('select').on('change', function() {
         var objectID = $("#objectID").val();
@@ -138,7 +136,22 @@
             $('#txtUpdateTeam2').val('');
         }
     });
-
+	
+	// LOAD CURRENT ONGOING GAME FOR ADMIN
+	socket.on('getCurrentGame', function(game){
+		if (typeof game.team1 !== "undefined"){
+			$('#selector-team1 option[value=' + game.team1.country + ']').attr("selected", "selected");
+			$('#selector-team2 option[value=' + game.team1.country + ']').attr("selected", "selected");
+			$('.goalsTeam1').text(game.team1.goals);
+			$('.goalsTeam2').text(game.team2.goals);
+			$('.shotsTeam1').text(game.team1.shots);
+			$('.shotsTeam2').text(game.team2.shots);
+			$('.foulsTeam1').text(game.team1.fouls);
+			$('.foulsTeam2').text(game.team2.fouls);
+		}
+	});
+	
+	// UPDATE LIVE GAME STATS 
     socket.on('updateGame', function(game) {
         $('.goalsTeam1').text(game.team1.goals);
         $('.goalsTeam2').text(game.team2.goals);
@@ -147,7 +160,8 @@
         $('.foulsTeam1').text(game.team1.fouls);
         $('.foulsTeam2').text(game.team2.fouls);
     });
-
+	
+	// RESET STATS WHEN NEW GAME HAS STARTED
     socket.on('newGame', function(game) {
 		$('select').prop('selectedIndex', 0);
 		$('.goalsTeam1').text(game.team1.goals);
