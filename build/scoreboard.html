@@ -48,7 +48,35 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
     var socket = io();
+	// LOAD ONGOING GAME
+	socket.on('getCurrentGame', function(game){
+		if (typeof game.team1 !== "undefined"){
+			$('#team1').text(game.team1.country);
+			$('#team2').text(game.team2.country);
+			$('#flag-team1').attr('src', '/build/img/' + game.team1.country + '.png');
+			$('#flag-team2').attr('src', '/build/img/' + game.team2.country + '.png');
+			$('#score-team1').text(game.team1.goals);
+			$('#score-team2').text(game.team2.goals);
+			$('#shots-team1').text(game.team1.shots);
+			$('#shots-team2').text(game.team2.shots);
+			$('#fouls-team1').text(game.team1.fouls);
+			$('#fouls-team2').text(game.team2.fouls);
+		}
+		
+		if (typeof game.team1.updates !== "undefined"){
+			for(i = 0; game.team1.updates.length > i ; i++){
+				$('.updates').prepend('<li class="updateTeam1">' + game.team1.updates[i] + '</li>');
 
+			}
+		} else if(typeof game.team2.updates !== "undefined"){
+			for(i = 0; game.team2.updates.length > i ; i++){
+				$('.updates').prepend('<li class="updateTeam2">' + game.team2.updates[i] + '</li>');
+
+			}
+		}
+	});
+	
+	// UPDATE GAME STATS
     socket.on('updateGame', function(game) {
         $('#team1').text(game.team1.country);
 		$('#team2').text(game.team2.country);
@@ -60,19 +88,15 @@
 		$('#shots-team2').text(game.team2.shots);
 		$('#fouls-team1').text(game.team1.fouls);
 		$('#fouls-team2').text(game.team2.fouls);
-		$('.updates').prepend('<li class="updateTeam1">' + game.team1.updates + '</li>');
-		$('.updates').prepend('<li class="updateTeam2">' + game.team2.updates + '</li>');
-
     });
 	
-    /*	
-		socket.on('updateTeam1', function(msg){
-			$('.updates').prepend('<li class="updateTeam1">' + msg.update + '</li>');
-		});
-		socket.on('updateTeam2', function(msg){
-			$('.updates').prepend('<li class="updateTeam2">' + msg.update + '</li>');
-		});
-		*/
+	// UPDATE REALTIME MESSAGES
+	socket.on('updateRealtimeTeam1', function(game){
+		$('.updates').prepend('<li class="updateTeam1">' + game.team1.updates + '</li>');
+	});
+	socket.on('updateRealtimeTeam2', function(game){
+		$('.updates').prepend('<li class="updateTeam2">' + game.team2.updates + '</li>');
+	});
 </script>
 
 </html>

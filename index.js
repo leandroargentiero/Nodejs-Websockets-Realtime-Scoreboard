@@ -37,7 +37,9 @@ var Game = mongoose.model('Game', gameSchema);
 
 // WEBSOCKETS
 io.on('connection', function(socket) {
-
+	console.log('A new user connected');
+	
+	// GET CURRENT ONGOING GAME
     io.emit('getCurrentGame', currentGame);
 
     socket.on('reset', function(msg) {
@@ -61,7 +63,7 @@ io.on('connection', function(socket) {
         newGame.save(function(err, newGame) {
             if (err) return console.error(err);
             io.emit('reset', newGame);
-            console.log("RESET MATCH");
+            console.log("STARTED NEW GAME");
             currentGame = newGame._id;
             console.log(currentGame);
         });
@@ -74,6 +76,7 @@ io.on('connection', function(socket) {
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
             io.emit('updateGame', found);
+			currentGame = found;
         });
     });
 
@@ -225,7 +228,7 @@ io.on('connection', function(socket) {
             'team1.updates': msg.update
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
-            io.emit('updateGame', found);
+            io.emit('updateRealtimeTeam1', found);
         });
     });
 
@@ -235,28 +238,14 @@ io.on('connection', function(socket) {
             'team2.updates': msg.update
         }, function(err, data) {});
         Game.findById(msg.id, function(err, found) {
-            io.emit('updateGame', found);
+			currentGame = found;
+            io.emit('updateRealtimeTeam2', found);
         });
     });
 
 
 
 });
-
-/*	
-	socket.on('updateTeam1', function(msg){
-		io.emit('updateTeam1', msg);
-		console.log(msg);
-	});
-	
-	socket.on('updateTeam2', function(msg){
-		io.emit('updateTeam2', msg);
-		console.log(msg);
-	});
-
-			  
-});
-*/
 
 // ROUTING
 app.use('/build', express.static(__dirname + '/build'));

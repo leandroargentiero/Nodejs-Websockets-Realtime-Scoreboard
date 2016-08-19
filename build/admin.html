@@ -147,6 +147,13 @@
     });
 
     socket.on('reset', function(game) {
+		$('select').prop('selectedIndex', 0);
+		$('.goalsTeam1').text(game.team1.goals);
+        $('.goalsTeam2').text(game.team2.goals);
+        $('.shotsTeam1').text(game.team1.shots);
+        $('.shotsTeam2').text(game.team2.shots);
+        $('.foulsTeam1').text(game.team1.fouls);
+        $('.foulsTeam2').text(game.team2.fouls);
         $('#objectID').attr('value', game._id);
     });
 
