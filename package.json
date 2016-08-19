@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "A real-time scoreboard with node.js and web sockets",
   "author": "Leandro Argentiero",
+  "repository":{
+  	"type": "git",
+	"url": "https://github.com/leandroargentiero/herexamenwebtech2"
+  },
   "dependencies": {},
   "devDependencies": {
     "express": "^4.14.0",
