@@ -2,3 +2,5 @@
 node_modules/*
 
 *.log
+
+node_modules/download/node_modules/isarray/index.js
