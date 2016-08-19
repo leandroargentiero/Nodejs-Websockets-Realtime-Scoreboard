@@ -259,6 +259,8 @@ io.on('connection', function(socket) {
     });
 });
 
+app.set('port', (process.env.PORT || 5000));
+
 // ROUTING
 app.use('/build', express.static(__dirname + '/build'));
 
@@ -274,6 +276,6 @@ app.get('/admin', function(req, res) {
     res.sendFile(__dirname + '/build/admin.html');
 });
 
-http.listen(3000, function() {
-    console.log('App listening on *:3000');
+http.listen(process.env.PORT || 3000, function() {
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
