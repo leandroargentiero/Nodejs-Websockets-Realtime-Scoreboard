@@ -1,6 +1,8 @@
-# herexamenwebtech2
 # Real-time scoreboard with node.js and websockets
 
--- student: Argentiero Leandro
--- course: Webtech2
--- date: August 24th 2016
+===== TEST IT YOURSELF =====
+
+-- The scoreboard itself: https://real-time-scoreboard.herokuapp.com/
+
+-- The admin dashboard to control the scoreboard: https://real-time-scoreboard.herokuapp.com/admin
+
